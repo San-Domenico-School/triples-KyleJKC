@@ -1,19 +1,78 @@
 /**
- * Write a description of class Deck here.
+ * Deck class
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @Kyle Jin
+ * @Jan 29, 2024
  */
 
 import greenfoot.*;
+import java.util.ArrayList;
 
 public class Deck 
 {
-    /****************************************************
-    ***   Leave as comment until ready to implement   ***
-    *****************************************************
+    private Card unShuffledDeck[];
+    private ArrayList<Card> shuffledDeck = new ArrayList<Card>();
+    
+    //Constructor
+    Deck(int numOfCardsInDeck)
+    {
+        numOfCardsInDeck = limitNumCardsInDeck(numOfCardsInDeck);  // limits size to 27 or 81        
+        unShuffledDeck = new Card[numOfCardsInDeck + 1];           // playing cards plus blank card
+        shuffledDeck = new ArrayList<>();                          // Instantiates ArrayList with no elements
+        populateUnshuffledDeckWithCards(numOfCardsInDeck);         // Initializes Unshuffled Deck
+        createShuffledDeck();                                      // Initializes shuffled deck excluding blank card
+    }
+    
+    // Methods
+    // getNumCardsInDeck keeps track of how many unused cards remain in the deck.
+    protected int getNumCardsInDeck()
+    {
+        return shuffledDeck.size();
+    }
+    
+    // createShuffledDeck shuffles the unshuffled deck to form the shuffled deck.  Removes blank card.
+    private void createShuffledDeck()
+    {
+        for (int i = 1; i < unShuffledDeck.length; i++)
+        {
+            int index = (int) (Math.random() * shuffledDeck.size());
+            shuffledDeck.add(index, unShuffledDeck[i]);
+        }
+    }
+    
+    // getTopCard returns the top card of the deck as the cards are dealt.
+    protected Card getTopCard()
+    {
+        return shuffledDeck.remove(0);
+    }
+    
+    // getShuffledCard returns a card at a specific location in the deck.
+    protected Card getShuffledCard(int index)
+    {
+        return shuffledDeck.get(index);
+    }
+    
+    // getShuffledDeck returns the entire shuffled deck.
+    protected ArrayList<Card> getShuffledDeck()
+    {
+        return shuffledDeck;
+    }
+    
+    // limitNumCardsInDeck forces the number of cards in the unshuffled deck to either be 27 (3 set of 3 characteristics of triples) or 81(3 set of 4 characteristics of triples).
+    protected int limitNumCardsInDeck(int limit)
+    {
+        if(limit <= 27)
+        {
+            return 27;
+        }
+        else
+        {
+            return 81;
+        }
+    }
+    
     // adds all the cards to the unshuffled deck.   
-    private void populateUnshuffledDeckWithCards(int numOfCardsInDeck)        
+    protected void populateUnshuffledDeckWithCards(int numOfCardsInDeck)        
     {
         unShuffledDeck[0] = new Card(Card.Shape.NO_SHAPE, Card.Color.NO_COLOR,0,0,
                 new GreenfootImage("Triplets_0/blank_0_0_0.png"), 
@@ -268,6 +327,4 @@ public class Deck
                 }
           }
     }
-    
-    **************  END OF COMMENT BLOCK  ***************/
 }
