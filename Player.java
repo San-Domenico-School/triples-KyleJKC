@@ -85,5 +85,6 @@ public class Player extends Actor
             dealer.checkIfTriple();
             resetCardsSelected();
         }
+        cardsOnBoard = (ArrayList) getWorld().getObjects(Card.class);
     }
 }

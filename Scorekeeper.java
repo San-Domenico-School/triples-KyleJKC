@@ -6,7 +6,7 @@
  */
 public class Scorekeeper  
 {
-    private static int deckSize, score;
+    private static int deckSize, score = 0;
     private static long startTime = System.currentTimeMillis();
     
     public static void setDeckSize(int size)
